@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>我的博客</title>
+		<style type="text/css">
+
+					/*通配符，去掉所有“body ,ul, li ,p,h1~h6,dd,dt”等……都有默认的margin 或padding值*/
+			* {margin:0; padding:0;}  
+			
+					/*设置嫩绿色背景 和 全局字体*/
+			body {background:#93ee32; font-size:14px;}	
+
+					/*去掉所有list自带样式*/
+			ul {list-style:none;} 
+
+					/*顶部黑色背景块*/
+			.header {height:80px; background:#000;}  
+
+					/*我的博客*/
+			.header h1 {color:#9ACD32;}  
+
+					/*留言本...等list。白色文字，去掉默认的链接下划线修饰*/
+			.header li a {color:#fff; margin:0 25px; text-decoration:none;} 
+
+					/*鼠标移到链接处出现下划线和添加文字颜色*/
+			.header li a:hover {color:#9ACD32; text-decoration:underline;}
+
+					/*width是“我的博客+list”的长度， auto设置文字水平居中*/
+			.wrapper {width:700px; margin:0 auto;} 
+
+					/*line-height和height组合到一块儿，还有一种效果，就是如果把它们的值设置的一样了（跟包裹他的div黑色背景同			样大小），文字就会在垂直方向居中*/
+					/*我的博客，向左float，右边腾出位置给 留言本list，文字垂直居中*/
+			.wrapper h1 {float:left; height:80px; line-height:80px;} 
+
+					/*ul向右float，*/
+			.wrapper ul {float:right;} 
+
+					/*留言本等list向左float，即变成水平排列，默认是竖直排列*/
+			.wrapper li {float:left;height:80px; line-height:80px;} 
+
+
+					/*除顶部黑色背景块外的全部，*/
+			.main {clear:both; width:750px; margin:10px auto 0; background:#fff; padding:10px 3px 1px;}
+
+				    /*欢迎来到我的博客，*/
+			.main h2 {width:700px; height:182px; line-height:182px; padding: 10px;margin-left:20px;
+				 		background:url(./images/header.gif) no-repeat ;}
+
+				 	/*文字内容部分*/
+			.content {float:left; width:530px;}
+
+					/*右下链接部分list*/
+			.sidebar {float:left; width:200px;margin-left:20px;}
+
+					/*北京，我来了，培训第一天...等的下划线*/
+			.main h3 {border-bottom:1px solid #9ACD32; padding-bottom:5px;}
+
+					/*段落内容*/
+			.content p {text-indent:2em;line-height:22px; margin:10px 0;}
+			
+					/*北京，我来了 等list*/
+			.sidebar li {line-height:29px;}
+
+					/*北京，我来了 等list*/
+			.sidebar li a {text-decoration:none;}
+
+					/*北京，我来了 等list*/
+			.sidebar li a:hover {text-decoration:underline; color:#9ACD32;}
+
+					/*更多...... 右对齐*/
+			.sidebar p {text-align:right;}
+
+					/*更多......*/
+			.sidebar p a {color:#8B4513; text-decoration:none;}
+
+					/*更多......*/
+			.sidebar p a:hover {text-decoration:underline;}
+
+					/*搜索框*/
+			.sidebar form {margin-top:10px;}
+
+					/*搜索框的width*/
+			.keyword {width:140px;}
+
+					/*底部灰色块*/
+			.footer {clear:both;  width:750px; height:50px; background:#4a4a4a;}
+
+					/*©2008我的博客 | zlvc 我的博客*/
+			.footer p {text-align:center;height:50px; line-height:50px;color:#fff;}
+		</style>
+	</head>
+	<body>
+		<!-- 头部 start -->
+		<div class="header">
+			<div class="wrapper">
+				<h1>我的博客</h1>
+				<ul>
+					<li><a href="">留言本</a></li>
+					<li><a href="">友情链接</a></li>
+					<li><a href="">关于自己</a></li>
+					<li><a href="">我的日记</a></li>
+					<li><a href="">首页</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- 头部 start -->
+
+		<!-- 主体 start -->
+		<div class="main">
+			<h2>欢迎来到我的博客</h2>
+
+			<!-- 博客列表 start -->
+			<div class="content">
+				<div class="blog">
+					<h3>北京，我来了</h3>
+					<p>醒来已是傍晚时分，和同学一起出门打的来到“大鸭梨”，说这儿的烤鸭很好，同学点了一个标准烤鸭，来了一瓶白酒。烤鸭端上来了， 和我想象中的完全不一样，味道嘛，还凑合，喝了二两小酒，幸亏是低度酒，否则肯定吃不消了。吃完就回家了，看了一会电视，上了一会网， 等睡觉的时候已然一点半了，真够晚的。</p>
+					<p>呵呵，晚上上网的时候，改了一下自己的qq签名-----北京，我来了！可对北京并没有什么感觉，真的是没什么感觉……</p>
+				</div>
+				<div class="blog">
+					<h3>培训的第一天</h3>
+					<p>昨晚在同学那里住宿，早上起晚了点，匆匆忙忙的和同学一起奔赴软件园，连早饭都没吃。北京早上上班的情景，那叫一个壮观， 人山人海，异常拥挤，有种窒息的感觉。好不容易到了软件园，费了好大劲才找到上课地点，已经9点40了，第一天就迟到了， 这种感觉并不好。</p>
+					<p>中午，一种莫名的孤独感油然而生,且迟迟没能消去，很久没有这种感觉了,今天的内容比较简单，学习也提不起兴致来，脑子里老在想一些事情， 宿舍也还没有安排好，心中有些不快。</p>
+				</div>
+				<div class="blog">
+					<h3>培训的第二天</h3>
+					<p>今天起了个早，总算没有迟到，上午听了一个上午，都是些最基本的东西，午饭之前的时候，开始提到了CSS。吃午饭的时候， 突然冒出一个想法来----打道回府。感觉到这里收获也不大，人也挺遭罪的。孤独感还没完全消去，回家的念头始终在心头。 有些犹豫，值不值得学下去呢。犯难中……。</p>
+					<p>下午和工作人员沟通了一下，心中的结稍有缓解，可总觉得有些不爽。自己得掏几千块钱出来呢。一个月的工资又不见面了，心疼也。</p>
+				</div>
+			</div>
+			<!-- 博客列表 end -->
+
+			<!-- 侧栏 start -->
+			<div class="sidebar">
+				<div>
+					<h3>文章列表</h3>
+					<ul>
+						<li><a href="">北京，我来了</a></li>
+						<li><a href="">旅途愉快</a></li>
+						<li><a href="">学习计划</a></li>
+						<li><a href="">CSS禅意花园</a></li>
+						<li><a href="">javasript编程指南</a></li>
+					</ul>
+					<p><a href="">更多......</a></p>
+				</div>
+
+				<div>
+					<h3>友情链接</h3>
+					<ul>
+						<li><a href="">太平洋电脑网</a></li>
+						<li><a href="">IT168.com</a></li>
+						<li><a href="">开心网</a></li>
+						<li><a href="">QQ农场</a></li>
+						<li><a href="">网易邮箱</a></li>
+					</ul>
+					<p><a href="">更多......</a></p>
+				</div>
+
+				<div>
+					<h3>本站搜索</h3>
+					<form action="" method="post">
+						<input type="text" name="keyword" class="keyword">
+						<input type="submit" value="search">
+					</form>
+				</div>
+
+			
+			</div>
+			<!-- 侧栏 end -->
+
+			<!-- 底部 start -->
+			<div class="footer">
+				<p>©2008我的博客 | zlvc 我的博客</p>
+			</div>
+			<!-- 底部 end -->
+
+
+		</div>
+		<!-- 主体 end -->
+	</body>
+</html>

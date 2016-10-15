@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <title>贪吃蛇</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+
+        <script type="text/javascript">
+        //① 绘制操作界面
+        function Map(){
+            var w = 800;
+            var h = 400;
+            this.showmap = function(){
+                //利用dom技术创建div元素并设置css样式
+                //并把div追加到body里边
+                var mian = document.createElement('div');
+                mian.style.width = w+"px";
+                mian.style.height = h+"px";
+                //mian.style.backgroundColor = "pink";
+
+                //背景方块图片
+                mian.style.backgroundImage = "url(images/12.jpg)";
+                document.body.appendChild(mian);
+            }
+        }
+
+        //② 绘制食物
+        function Food(){
+            var len = 20; //食物边长
+
+            //声明食物权值坐标为公开的成员
+            this.xFood = 0;
+            this.yFood = 0;
+
+            this.pian = null; //用于保存食物的成员对象
+
+            this.showfood = function(){
+                if(this.pian===null){
+                    //利用dom创建一个div，绘制绿色的css背景颜色 
+                    //宽度和高度都是20
+                    //最后div被追加给body
+                    this.pian = document.createElement('div');
+                    this.pian.style.width = this.pian.style.height = len+"px";
+                    this.pian.style.backgroundColor = "green";
+
+
+                    // 相对定位时，无论是否进行移动，元素仍然占据原来的空间。因此，移动元素会导致它覆盖其他框
+                    // 绝对定位，位置将依据浏览器左上角开始计算。 绝对定位使元素脱离文档流，因此不占据空间
+                    //给div设置绝对定位
+                    this.pian.style.position = "absolute";
+                        
+                    document.body.appendChild(this.pian);
+
+                }
+
+                //食物摆放有“步进值20”防止放到线上
+                //食物在地图的位置是变的，原因是其有“权值”
+                //x轴权值的范围：0-39(Math.floor(Math.random()*40))
+                //y轴权值的范围：0-19(Math.floor(Math.random()*20))
+
+                //left和top对决定定位元素进行位置设定的两个样式
+                //食物坐标=步进值 * 权值;
+                this.xFood = Math.floor(Math.random()*40);
+                this.yFood = Math.floor(Math.random()*20);
+                this.pian.style.left = this.xFood*len+"px";
+                this.pian.style.top  = this.yFood*len+"px";
+            }
+        }
+
+        //③ 绘制小蛇
+        function Snake(){
+            var len = 20; //每个蛇节的边长
+
+            //蛇节：[x坐标，y坐标，颜色，div元素节点对象]
+            this.snakebody = [[0,1,'green',null],[1,1,'green',null],[2,1,'green',null],[3,1,'red',null]];
+            
+            //蛇头默认移动方向(右)
+            this.redirect = "right";
+
+            //绘制
+            this.showsnake = function(){
+                //遍历每个蛇节并进行具体设置
+                for(var i=0; i<this.snakebody.length; i++){
+                    //创建每个蛇节div之前先判断，不要重复创建
+                    if(this.snakebody[i][3]===null){
+                        this.snakebody[i][3] = document.createElement('div');
+                        this.snakebody[i][3].style.height = this.snakebody[i][3].style.width = len+"px";
+                        this.snakebody[i][3].style.backgroundColor = this.snakebody[i][2];
+                        //绝对定位
+                        this.snakebody[i][3].style.position = "absolute";
+                        
+                        document.body.appendChild(this.snakebody[i][3]);
+                    }
+
+                    //设置坐标=权值坐标 * 步进值;
+                    this.snakebody[i][3].style.left = this.snakebody[i][0] * len+"px";
+                    this.snakebody[i][3].style.top = this.snakebody[i][1] * len+"px";
+                }
+            }
+
+            //移动小蛇
+            this.movesnake = function(){
+                //当前蛇节新坐标 等于下个蛇节的 旧坐标
+                for(var i=0; i<this.snakebody.length-1; i++){
+                    this.snakebody[i][0] = this.snakebody[i+1][0];
+                    this.snakebody[i][1] = this.snakebody[i+1][1];
+
+                }
+                //蛇头移动
+                if(this.redirect == 'right')
+                    this.snakebody[this.snakebody.length-1][0]++; //x轴坐标++
+                else if (this.redirect == 'left')
+                    this.snakebody[this.snakebody.length-1][0]--; //x轴坐标--
+                else if (this.redirect == 'top')
+                    this.snakebody[this.snakebody.length-1][1]--; //y轴坐标--
+                else if (this.redirect == 'down')
+                    this.snakebody[this.snakebody.length-1][1]++; //y轴坐标++
+
+
+                //蛇头碰到食物（蛇头坐标 与 食物坐标 对比）
+                var xSnake = this.snakebody[this.snakebody.length-1][0];
+                var ySnake = this.snakebody[this.snakebody.length-1][1];
+                //food.xFood  food.yFood分别是食物的x/y轴坐标
+                if(xSnake==food.xFood && ySnake==food.yFood){
+                    //增加蛇节
+                    //增加新蛇节，该蛇节的坐标等于"蛇尾巴节"旧的坐标
+                    var newjie = [this.snakebody[0][0],this.snakebody[0][1],'green',null];
+
+                        // unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度。
+                    this.snakebody.unshift(newjie);
+
+                    //生成一个新食物
+                    food.showfood();
+                }
+
+                //规定小蛇在地图范围移动
+                if(xSnake>39 || xSnake<0 || ySnake>19 || ySnake<0){
+                    alert('game over');
+                    clearInterval(mytime);
+                    return false;
+                }
+                //蛇头吃到自己的判断
+                for(var k=0; k<this.snakebody.length-1; k++){
+                    //蛇头坐标 是否 等于任何一个蛇节的坐标
+                    if(xSnake==this.snakebody[k][0] && ySnake==this.snakebody[k][1]){
+                        alert('kill you by yourself game over!');
+                        clearInterval(mytime);
+                        return false;
+                    }
+                }
+
+                //根据新坐标重新绘制小蛇
+                this.showsnake();
+            }
+        }
+
+        window.onload = function(){
+            //操作界面
+            var map = new Map();
+            map.showmap();
+
+            //绘制食物
+            food = new Food();
+            food.showfood();
+
+            //绘制小蛇
+            snake = new Snake();
+            snake.showsnake();
+
+            //移动小蛇,并且不要停止  Interval:间隔; 区间;
+            mytime = setInterval("snake.movesnake()",200);
+            //snake.movesnake();
+
+            //给body设置键盘事件，通过"事件对象"感知被触发的键子信息
+            document.onkeyup = function(evt){
+                var num = evt.keyCode;
+                switch(num){
+                    case 37:
+                        snake.redirect = "left";
+                        break;
+                    case 38:
+                        snake.redirect = "top";
+                        break;
+                    case 39:
+                        snake.redirect = "right";
+                        break;
+                    case 40:
+                        snake.redirect = "down";
+                        break;
+                }
+            }
+        }
+        </script>
+
+        <style type="text/css">
+        body{margin:0;}
+        </style>
+    </head>
+    <body>
+    </body>
+</html>
+<!-- 
+贪吃蛇案例
+DOM
+事件操作
+面向对象
+1. 绘制操作界面
+2. 绘制食物
+3. 绘制小蛇
+4. 小蛇移动
+上：y轴坐标--，不断减1
+下：y轴坐标++，不断加1
+左：x轴坐标--，不断减1
+右：x轴坐标++，不断加1
+移动
+5. 利用键盘事件控制小蛇移动方向
+事件中有“事件对象”可以感知被触发键子信息
+6. 小蛇吃食物
+① 判断蛇头碰到食物，蛇头坐标 与 食物坐标一致
+② 小蛇吃食物，增加蛇节，创建新食物
+
+7.  限制小蛇移动范围，
+同时蛇头不能吃到自己(蛇头坐标 与 蛇身子的任何一个蛇节坐标是否相等)
+
+扩展：
+① 给吃食物做计数器显示
+② 给游戏设置难易度，例如每吃到5个食物就增加一个难度(升级)
+停止旧的setInterval()
+重新根据新的间隔时间设置setInterval()
+ -->
